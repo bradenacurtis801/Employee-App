@@ -459,40 +459,40 @@ class EmployeeDB:
         self.EMPLOYEE_TYPE_INDEX = 2
         self.ID_NUMBER_INDEX = 20
         
-        if not os.path.exists("./employees.csv"):
-            with open("./employees.csv", 'x', encoding="utf8", ) as database:
+        if not os.path.exists("./cs2450-project-main/employees.csv"):
+            with open("./cs2450-project-main/employees.csv", 'x', encoding="utf8", ) as database:
                 writer = csv.writer(database)
                 writer.writerow(
                     "ID,Name,Address,City,State,Zip,Classification," \
                     "Pay_Method,Salary,Hourly,Commission,Route,Account," \
                     "Birth_Date,SSN,Phone,Email,Start_Date,End_Date," \
                     "Title,Dept,Permission,Password".split(','))
-                self.database = open("./employees.csv", encoding="utf8", )
+                self.database = open("./cs2450-project-main/employees.csv", encoding="utf8", )
                 
         else:
-            self.database = open("./employees.csv", encoding="utf8")
+            self.database = open("./cs2450-project-main/employees.csv", encoding="utf8")
 
         # Make Admin csv file if it doesn't exist
-        if not os.path.exists("./admins.csv"):
-            with open("./admins.csv", "x", encoding="utf8") as database:
+        if not os.path.exists("./cs2450-project-main/admins.csv"):
+            with open("./cs2450-project-main/admins.csv", "x", encoding="utf8") as database:
                 writer = csv.writer(database)
                 writer.writerow("ID,Name".split(','))
-                self.admins = open("./admins.csv", encoding="utf8")
+                self.admins = open("./cs2450-project-main/admins.csv", encoding="utf8")
         else:
-            self.admins = open("./admins.csv", encoding="utf8")
+            self.admins = open("./cs2450-project-main/admins.csv", encoding="utf8")
 
-        if not os.path.exists("./archived.csv"):
-            with open("./archived.csv", "x", encoding="utf8") as database:
+        if not os.path.exists("./cs2450-project-main/archived.csv"):
+            with open("./cs2450-project-main/archived.csv", "x", encoding="utf8") as database:
                 writer = csv.writer(database)
                 writer.writerow(
                     "ID,Name,Address,City,State,Zip,Classification," \
                     "Pay_Method,Salary,Hourly,Commission,Route,Account," \
                     "Birth_Date,SSN,Phone,Email,Start_Date,End_Date," \
                     "Title,Dept,Permission,Password".split(','))
-                self.archived = open("./archived.csv", encoding="utf8")
+                self.archived = open("./cs2450-project-main/archived.csv", encoding="utf8")
                 
         else:
-            self.archived = open("./archived.csv", 'r', encoding="utf8")
+            self.archived = open("./cs2450-project-main/archived.csv", 'r', encoding="utf8")
         self.emp_list = []
         self.admin_list = []
         self.archived_list = []
@@ -527,7 +527,7 @@ class EmployeeDB:
         employee.job_status = 'unactive'
         self.emp_list.remove(employee)
         self.archived_list.append(employee)
-        _add_row(employee, "./archived.csv")
+        _add_row(employee, "./cs2450-project-main/archived.csv")
         
     def unarchive_employee(self, id_num):
         temp_list = []
@@ -535,12 +535,12 @@ class EmployeeDB:
         employee.job_status = 'active'
         self.archived_list.remove(employee)
         self.emp_list.append(employee)
-        with open("./archived.csv", "r", encoding="utf8") as database:
+        with open("./cs2450-project-main/archived.csv", "r", encoding="utf8") as database:
             reader = csv.reader(database)
             for line in reader:
                 if line[0] != str(id_num):
                     temp_list.append(line)
-        with open("./archived.csv", 'w', newline='', encoding="utf8") as database:
+        with open("./cs2450-project-main/archived.csv", 'w', newline='', encoding="utf8") as database:
             writer = csv.writer(database, delimiter=',')                   
             for employee in temp_list:
                 writer.writerow(employee)
@@ -555,7 +555,7 @@ class EmployeeDB:
         """
         employee.job_status = 'active'
         self.emp_list.append(employee)
-        _add_row(employee, "./employees.csv")
+        _add_row(employee, "./cs2450-project-main/employees.csv")
 
     def edit_employee(self, id_num, fields: list, data: list):
         """
@@ -566,7 +566,7 @@ class EmployeeDB:
         open("temp/employees.csv", "w",newline='') in on line 616
         of open("employees.csv", "w",newline='')
         """
-        with open("./employees.csv", encoding="utf8") as database:
+        with open("./cs2450-project-main/employees.csv", encoding="utf8") as database:
             emp_dict = csv.DictReader(database)
             temp = []
             for row in emp_dict:
@@ -577,7 +577,7 @@ class EmployeeDB:
                         # Print out fields and data lists.
                         temp_row[fields[index]] = data[index]
                 temp.append(temp_row)
-        with open("./employees.csv", "w", newline='', encoding="utf8") as temp_db:
+        with open("./cs2450-project-main/employees.csv", "w", newline='', encoding="utf8") as temp_db:
             fieldnames = "ID,Name,Address,City,State,Zip,Classification," \
                          "Pay_Method,Salary,Hourly,Commission,Route,Account," \
                          "Birth_Date,SSN,Phone,Email,Start_Date,End_Date," \
